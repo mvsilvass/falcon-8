@@ -13,7 +13,6 @@ O **Falcon-8** é um processador monociclo desenvolvido para a disciplina de Arq
 | **Memória de dados** | 256 bytes | Endereçamento otimizado de 8 bits (0x00 a 0xFF). |
 | **Memória de instruções** | 512 bytes | Suporta até 256 instruções (8 bits de endereço × 2 bytes). |
 | **Clock** | 50 MHz | Ciclo de 20ns, ideal para resposta rápida em tempo real. |
-| **Custo Estimado** | US$ 1.20 | Altamente viável para produção em larga escala (monociclo). |
 
 
 ## Conjunto de Instruções
