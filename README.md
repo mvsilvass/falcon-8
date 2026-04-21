@@ -55,7 +55,7 @@ Definição da largura dos campos para cada tipo de instrução (R, I, S, B, J).
 
 ## 🏗️ Implementação Completa (Main)
 
-Abaixo apresento a visão geral do processador **Falcon-8** integrado. Este módulo principal (Main) conecta os 7 componentes explicados anteriormente, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no **Instruction Fetch**, passando pela decodificação e execução na **ULA**, até o armazenamento final na **Data Memory**.
+Abaixo apresento a visão geral do processador **Falcon-8** integrado. Este módulo principal conecta os 7 componentes explicados anteriormente, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no **Instruction Fetch**, passando pela decodificação e execução na **ULA**, até o armazenamento final na **Data Memory**.
 
 ![Processador Falcon-8 Completo](images/datapath.png)
 
@@ -129,14 +129,14 @@ O SFI monitora os sensores e decide o nível de frenagem necessário.
 
 ---
 
-## 🧪 Validação e Casos de Teste (Módulo 1)
+## 🧪 Validação e Casos de Teste
 
 Para garantir a confiabilidade do sistema de frenagem, o processador foi submetido aos 5 casos de teste obrigatórios. Para cada cenário, foi desenvolvido um código Assembly específico e um arquivo de imagem de memória correspondente.
 
 ### Metodologia de Teste
 1. O código Assembly no **RARS**.
 2. O binário foi carregado na **Data Memory** do Logisim.
-3. O processador executou a lógica e o resultado foi conferido no endereço `0x20` (Saída de Freio).
+3. O processador executou as instruções e o resultado final foi verificado via monitoramento dos endereços de saída.
 
 | Caso | Cenário | Entrada (Dist/Vel) | Saída Esperada (Freio)
 | :--- | :--- | :--- | :--- 
