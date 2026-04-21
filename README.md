@@ -55,7 +55,7 @@ Definição da largura dos campos para cada tipo de instrução (R, I, S, B, J).
 
 ## 🏗️ Implementação Completa (Main)
 
-Abaixo apresento a visão geral do processador **Falcon-8** integrado. Este módulo principal conecta os 7 componentes explicados anteriormente, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no **Instruction Fetch**, passando pela decodificação e execução na **ULA**, até o armazenamento final na **Data Memory**.
+Abaixo apresenta-se a visão geral do processador **Falcon-8** integrado. Este módulo principal centraliza a conexão entre os sete componentes fundamentais que compõem o sistema, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no *Instruction Fetch*, passando pela decodificação e execução na ULA, até o armazenamento final na *Data Memory*. O detalhamento técnico de cada módulo individual está apresentado na seção logo abaixo.
 
 ![Processador Falcon-8 Completo](images/datapath.png)
 
