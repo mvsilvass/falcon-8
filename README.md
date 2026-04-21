@@ -48,7 +48,7 @@ O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 
 ---
 
-## 🏗️ Implementação Completa
+## Implementação Completa
 
 Abaixo apresenta-se a visão geral do processador **Falcon-8** integrado. Este módulo principal centraliza a conexão entre os sete componentes fundamentais que compõem o sistema, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no *Instruction Fetch*, passando pela decodificação e execução na ULA, até o armazenamento final na *Data Memory*. O detalhamento técnico de cada módulo individual está apresentado na seção logo abaixo.
 
@@ -109,11 +109,11 @@ Interface de leitura e escrita para armazenamento persistente de dados e sensore
 
 ---
 
-## 🚦 Sistema de Frenagem Inteligente (SFI)
+## Sistema de Frenagem Inteligente (SFI)
 
 O SFI monitora os sensores e decide o nível de frenagem necessário.
 
-### 📥 Mapeamento de Memória (Entradas e Saídas)
+### Mapeamento de Memória (Entradas e Saídas)
 | Endereço | Descrição | Atuador/Sensor | Valor Exemplo |
 | :--- | :--- | :--- | :--- |
 | **0x10** | Distância Frontal | Ultrassônico | 2m |
@@ -125,7 +125,7 @@ O SFI monitora os sensores e decide o nível de frenagem necessário.
 
 ---
 
-## 🧪 Validação e Casos de Teste
+## Validação e Casos de Teste
 
 Para garantir a confiabilidade do sistema de frenagem, o processador foi submetido aos 5 casos de teste obrigatórios. Para cada cenário, foi desenvolvido um código Assembly específico e um arquivo de imagem de memória correspondente.
 
