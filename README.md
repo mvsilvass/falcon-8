@@ -137,9 +137,9 @@ Para garantir a confiabilidade do sistema de frenagem, o processador foi submeti
 | **4** | Limite Exato | 3m / 40km/h | **1 (Normal)**
 | **5** | Alta Velocidade | 30m / 80km/h | **0 (Desligado)** 
 
-## 🔧 Ferramentas Utilizadas
-* **Logisim Evolution:** Utilizado para o design digital do hardware, desde as portas lógicas da ULA até a integração do Datapath.
-* **RARS:** Utilizado para escrever, depurar e gerar o código binário do sistema SFI.
+## Ferramentas Utilizadas
+* **Logisim Evolution:** Utilizado para a modelagem e design digital do hardware.
+* **RARS:** Utilizado para o desenvolvimento, depuração e montagem do código em linguagem Assembly.
 
 ---
 
