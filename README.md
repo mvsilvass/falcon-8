@@ -16,18 +16,32 @@ O **Falcon-8** é um processador monociclo desenvolvido para a disciplina de Arq
 | **Custo Estimado** | US$ 1.20 | Altamente viável para produção em larga escala (monociclo). |
 
 
-##  Arquitetura do Processador
-O Falcon-8 utiliza uma arquitetura **monociclo** inspirada na filosofia RISC. Abaixo estão os detalhes da implementação:
+## Conjunto de Instruções
 
-
-### 📝 Formatos de Instrução
 O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 
 - **Tipo R:** Operações lógicas e aritméticas entre registradores.
 - **Tipo I:** Operações com valores imediatos e carregamento de memória (`LW`).
 - **Tipo S:** Escrita em memória (`SW`).
 - **Tipo B:** Desvios condicionais (`BEQ`, `BNE`, `BLT`).
-- **Tipo J:** Desvios incondicionais (`JAL`).
+- **Tipo J:** Desvios incondicionais (`JAL`)
+
+
+### 1. Instruction Format (Formatação)
+Definição da largura dos campos para cada tipo de instrução (R, I, S, B, J).
+![Instruction Format](images/instructions_format.png)
+
+### 2. Instructions Opcode
+Mapeamento dos códigos de operação que definem a classe da instrução.
+![Instructions Opcode](images/instructions_opcode.png)
+
+### 3. Instructions Funct
+Lógica de seleção utilizada para diferenciar instruções que compartilham o mesmo Opcode.
+![Instructions Funct](images/instructions_funct.png)
+
+### 4. Immediate Selector (IMM_SEL)
+Módulo responsável pela extração e extensão de sinal dos valores imediatos.
+![Immediate Selector](images/imm_sel.png)
 
 ## 🏗️ Implementação Completa (Main)
 
@@ -87,14 +101,13 @@ Para garantir a confiabilidade do sistema de frenagem, o processador foi submeti
 2. O binário foi carregado na **Data Memory** do Logisim.
 3. O processador executou a lógica e o resultado foi conferido no endereço `0x20` (Saída de Freio).
 
-| Caso | Cenário | Entrada (Dist/Vel) | Saída Esperada (Freio) | Screenshot |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | Emergência | 2m / 60km/h | **2 (Emergência)** | ![Link](screenshots/teste_emergencia.png) |
-| **2** | Normal | 50m / 40km/h | **0 (Off)** | ![Link](screenshots/teste_normal.png) |
-| **3** | Alerta | 2m / 20km/h | **1 (Normal)** | ![Link](screenshots/teste_alerta.png) |
-| **4** | Limite Exato | 3m / 40km/h | **1 (Normal)** | ![Link](screenshots/teste_limite.png) |
-| **5** | Alta Velocidade | 30m / 80km/h | **0 (Off)** | ![Link](screenshots/teste_velocidade.png) |
-
+| Caso | Cenário | Entrada (Dist/Vel) | Saída Esperada (Freio)
+| :--- | :--- | :--- | :--- 
+| **1** | Emergência | 2m / 60km/h | **2 (Emergência)** 
+| **2** | Normal | 50m / 40km/h | **0 (Desligado)** 
+| **3** | Alerta | 2m / 20km/h | **1 (Normal)**
+| **4** | Limite Exato | 3m / 40km/h | **1 (Normal)**
+| **5** | Alta Velocidade | 30m / 80km/h | **0 (Desligado)** 
 
 ## 🔧 Ferramentas Utilizadas
 * **Logisim Evolution:** Utilizado para o design digital do hardware, desde as portas lógicas da ULA até a integração do Datapath.
