@@ -17,6 +17,7 @@ O **Falcon-8** é um processador monociclo desenvolvido para a disciplina de Arq
 
 
 ## Conjunto de Instruções
+![Instruction Format](images/instructions_format.png)
 
 O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 
@@ -39,21 +40,16 @@ O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 | **R-TYPE** | SRL | 0000 | 110 | - |
 | **I-TYPE** | ADDI | 0001 | 000 | 00 |
 | **I-TYPE** | LOAD (LW) | 0010 | 000 | 00 |
-| **I-TYPE** | SLLI | 0111 | 000 | 00 |
+| **I-TYPE** | SLLI | 0111 | 101 | 00 |
 | **S-TYPE** | SW | 0011 | 000 | 01 |
-| **B-TYPE** | BEQ | 0100 | 000 | 10 |
-| **B-TYPE** | BNE | 0101 | 000 | 10 |
-| **B-TYPE** | BLT | 1000 | 000 | 10 |
+| **B-TYPE** | BEQ | 0100 | 001 | 10 |
+| **B-TYPE** | BNE | 0101 | 111 | 10 |
+| **B-TYPE** | BLT | 1000 | 100 | 10 |
 | **J-TYPE** | JAL | 0110 | 000 | 11 |
 
 ---
 
-### 1. Instruction Format (Formatação)
-Definição da largura dos campos para cada tipo de instrução (R, I, S, B, J).
-![Instruction Format](images/instructions_format.png)
-
-
-## 🏗️ Implementação Completa (Main)
+## 🏗️ Implementação Completa
 
 Abaixo apresenta-se a visão geral do processador **Falcon-8** integrado. Este módulo principal centraliza a conexão entre os sete componentes fundamentais que compõem o sistema, formando o datapath monociclo completo. Nesta visualização, é possível observar o fluxo de dados desde a busca da instrução no *Instruction Fetch*, passando pela decodificação e execução na ULA, até o armazenamento final na *Data Memory*. O detalhamento técnico de cada módulo individual está apresentado na seção logo abaixo.
 
