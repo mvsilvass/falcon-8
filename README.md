@@ -26,22 +26,32 @@ O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 - **Tipo B:** Desvios condicionais (`BEQ`, `BNE`, `BLT`).
 - **Tipo J:** Desvios incondicionais (`JAL`)
 
+## Tabela de Decodificação de Instruções
+
+| Tipo | Instrução | Opcode | Funct | IMM_SEL |
+| :--- | :--- | :---: | :---: | :---: |
+| **R-TYPE** | ADD | 0000 | 000 | - |
+| **R-TYPE** | SUB | 0000 | 001 | - |
+| **R-TYPE** | AND | 0000 | 010 | - |
+| **R-TYPE** | OR | 0000 | 011 | - |
+| **R-TYPE** | SLT | 0000 | 100 | - |
+| **R-TYPE** | SLL | 0000 | 101 | - |
+| **R-TYPE** | SRL | 0000 | 110 | - |
+| **I-TYPE** | ADDI | 0001 | 000 | 00 |
+| **I-TYPE** | LOAD (LW) | 0010 | 000 | 00 |
+| **I-TYPE** | SLLI | 0111 | 000 | 00 |
+| **S-TYPE** | SW | 0011 | 000 | 01 |
+| **B-TYPE** | BEQ | 0100 | 000 | 10 |
+| **B-TYPE** | BNE | 0101 | 000 | 10 |
+| **B-TYPE** | BLT | 1000 | 000 | 10 |
+| **J-TYPE** | JAL | 0110 | 000 | 11 |
+
+---
 
 ### 1. Instruction Format (Formatação)
 Definição da largura dos campos para cada tipo de instrução (R, I, S, B, J).
 ![Instruction Format](images/instructions_format.png)
 
-### 2. Instructions Opcode
-Mapeamento dos códigos de operação que definem a classe da instrução.
-![Instructions Opcode](images/instructions_opcode.png)
-
-### 3. Instructions Funct
-Lógica de seleção utilizada para diferenciar instruções que compartilham o mesmo Opcode.
-![Instructions Funct](images/instructions_funct.png)
-
-### 4. Immediate Selector (IMM_SEL)
-Módulo responsável pela extração e extensão de sinal dos valores imediatos.
-![Immediate Selector](images/imm_sel.png)
 
 ## 🏗️ Implementação Completa (Main)
 
@@ -49,35 +59,62 @@ Abaixo apresento a visão geral do processador **Falcon-8** integrado. Este mód
 
 ![Processador Falcon-8 Completo](images/datapath.png)
 
+---
+
 ### 1. Instruction Fetch (Busca)
+
 Responsável por gerenciar o **PC (Program Counter)** e buscar a próxima instrução na memória.
+
 ![Instruction Fetch](images/instruction_fetch.png)
+---
 
 ### 2. Instruction Decode (Decodificação)
+
 Separa os campos da instrução de 16 bits (Opcode, Rd, Rs1, Rs2 e Funct).
 ![Instruction Decode](images/instruction_decode.png)
 
+---
+
 ### 3. Unidade de Controle (UC)
+
 O "cérebro" do processador que ativa os sinais de controle baseados no Opcode.
 ![Unidade de Controle](images/control_unit.png)
 
+---
+
 ### 4. Register File (Banco de Registradores)
+
 Armazena os valores temporários e de cálculo nos 8 registradores de 8 bits.
+
 ![Register File](images/register_file.png)
 
+---
+
 ### 5. Immediate Generator (Imm Gen)
+
 Extrai e estende os valores constantes (imediatos) das instruções Tipo-I, S e B.
+
 ![Imm Gen](images/imm_gen.png)
 
+---
 ### 6. ULA (Unidade Lógica e Aritmética)
+
 Executa as operações matemáticas e lógicas centrais do sistema.
+
 ![ULA](images/alu.png)
 
+---
+
 ### 7. Data Memory
+
 Interface de leitura e escrita para armazenamento persistente de dados e sensores.
+
 ![Data Memory](images/data_memory.png)
 
+---
+
 ## 🚦 Sistema de Frenagem Inteligente (SFI)
+
 O SFI monitora os sensores e decide o nível de frenagem necessário.
 
 ### 📥 Mapeamento de Memória (Entradas e Saídas)
