@@ -17,15 +17,15 @@ O **Falcon-8** é um processador monociclo desenvolvido para a disciplina de Arq
 
 
 ## Conjunto de Instruções
-![Instruction Format](images/instructions_format.png)
-
 O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 
+![Instruction Format](images/instructions_format.png)
+
 - **Tipo R:** Operações lógicas e aritméticas entre registradores.
-- **Tipo I:** Operações com valores imediatos e carregamento de memória (`LW`).
-- **Tipo S:** Escrita em memória (`SW`).
-- **Tipo B:** Desvios condicionais (`BEQ`, `BNE`, `BLT`).
-- **Tipo J:** Desvios incondicionais (`JAL`)
+- **Tipo I:** Operações com valores imediatos e carregamento de memória.
+- **Tipo S:** Escrita em memória.
+- **Tipo B:** Desvios condicionais.
+- **Tipo J:** Desvios incondicionais.
 
 ## Tabela de Decodificação de Instruções
 
@@ -66,14 +66,15 @@ Responsável por gerenciar o **PC (Program Counter)** e buscar a próxima instru
 
 ### 2. Instruction Decode (Decodificação)
 
-Separa os campos da instrução de 16 bits (Opcode, Rd, Rs1, Rs2 e Funct).
+Responsável por extrair os campos da instrução de 16 bits (Opcode, Rd, Rs1, Rs2 e Funct), além de isolar os bits destinados ao valor imediato.
 ![Instruction Decode](images/instruction_decode.png)
 
 ---
 
 ### 3. Unidade de Controle (UC)
 
-O "cérebro" do processador que ativa os sinais de controle baseados no Opcode.
+Módulo responsável pela lógica combinacional que traduz o código de operação (Opcode) nos sinais de controle específicos, determinando o fluxo de dados entre a ULA, registradores e memória.
+
 ![Unidade de Controle](images/control_unit.png)
 
 ---
@@ -88,14 +89,14 @@ Armazena os valores temporários e de cálculo nos 8 registradores de 8 bits.
 
 ### 5. Immediate Generator (Imm Gen)
 
-Extrai e estende os valores constantes (imediatos) das instruções Tipo-I, S e B.
+Extrai e estende os valores constantes (imediatos) das instruções Tipo-I, Tipo-S, Tipo-B e Tipo-J.
 
 ![Imm Gen](images/imm_gen.png)
 
 ---
 ### 6. ULA (Unidade Lógica e Aritmética)
 
-Executa as operações matemáticas e lógicas centrais do sistema.
+Responsável pela execução das operações aritméticas e lógicas, processando os dados provenientes do banco de registradores ou valores imediatos conforme a instrução decodificada.
 
 ![ULA](images/alu.png)
 
@@ -128,11 +129,6 @@ O SFI monitora os sensores e decide o nível de frenagem necessário.
 ## 🧪 Validação e Casos de Teste
 
 Para garantir a confiabilidade do sistema de frenagem, o processador foi submetido aos 5 casos de teste obrigatórios. Para cada cenário, foi desenvolvido um código Assembly específico e um arquivo de imagem de memória correspondente.
-
-### Metodologia de Teste
-1. O código Assembly no **RARS**.
-2. O binário foi carregado na **Data Memory** do Logisim.
-3. O processador executou as instruções e o resultado final foi verificado via monitoramento dos endereços de saída.
 
 | Caso | Cenário | Entrada (Dist/Vel) | Saída Esperada (Freio)
 | :--- | :--- | :--- | :--- 
