@@ -1695,7 +1695,7 @@ e c0 60 2 7e 81 12 14
     </comp>
     <comp lib="0" loc="(470,270)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="SLT"/>
+      <a name="label" val="SLTU"/>
       <a name="labelfont" val="SansSerif bold 10"/>
       <a name="width" val="8"/>
     </comp>
@@ -1794,7 +1794,7 @@ e c0 60 2 7e 81 12 14
       <a name="type" val="zero"/>
     </comp>
     <comp lib="0" loc="(720,560)" name="Tunnel">
-      <a name="label" val="SLT"/>
+      <a name="label" val="SLTU"/>
       <a name="width" val="8"/>
     </comp>
     <comp lib="0" loc="(840,670)" name="Tunnel">
@@ -1896,8 +1896,8 @@ e c0 60 2 7e 81 12 14
     <comp lib="8" loc="(630,625)" name="Text">
       <a name="text" val="Logical Shift Left (LSL/SLL)"/>
     </comp>
-    <comp lib="8" loc="(645,500)" name="Text">
-      <a name="text" val="Logical Set Less Than (SLT)"/>
+    <comp lib="8" loc="(643,501)" name="Text">
+      <a name="text" val="Set Less Than Unsigned (SLTU)"/>
     </comp>
     <comp lib="8" loc="(909,497)" name="Text">
       <a name="text" val="Logical Shift Right  (SRL/LSR)"/>
