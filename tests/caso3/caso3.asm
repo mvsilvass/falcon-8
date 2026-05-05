@@ -1,37 +1,44 @@
-# --- CARGA DE DADOS ---
-ADD R0, R0, R0      # NOP
-LW  R1, 10(R0)      # R1 = 2  (Distância Atual)
-LW  R2, 11(R0)      # R2 = 20 (Velocidade Atual)
-LW  R3, 12(R0)      # R3 = 3  (Distância Segura)
-LW  R4, 13(R0)      # R4 = 30 (Velocidade Máxima)
+.text
+.globl main
+main:
+    # 1. CARGA DE DADOS (Simulando os valores nos registradores)
+    li   x1, 2    # Distância Atual
+    li   x2, 20   # Velocidade Atual
+    li   x3, 3    # Distância Segura
+    li   x4, 30   # Velocidade Máxima
 
-# --- TESTES LÓGICOS ---
-# 1. Distância < Limite?
-SLT R5, R1, R3      # 2 < 3? SIM, então R5 = 1
+    # 2. TESTES LÓGICOS
+    # Distância < Limite? (2 < 3)
+    slt  x5, x1, x3   # x5 = 1 (Verdadeiro)
+    
+    # Velocidade Máxima < Velocidade Atual? (30 < 20)
+    slt  x6, x4, x2   # x6 = 0 (Falso)
 
-# 2. Velocidade Máxima < Velocidade Atual?
-SLT R6, R4, R2      # 30 < 20? NÃO, então R6 = 0
+    # 3. TOMADA DE DECISÃO
+    # Se distância estiver OK (x5 == 0), pula para o bloco normal
+    beqz x5, bloco_normal
 
-# --- TOMADA DE DECISÃO ---
-# Se a distância estiver OK (R5 == 0), pula para o estado NORMAL (fim)
-BEQ R5, R0, 9       
+    # Se a velocidade estiver alta (x6 != 0), pula para o bloco de emergência
+    bnez x6, bloco_emergencia
 
-# Se a velocidade estiver ALTA (R6 != 0), pula para o bloco de EMERGÊNCIA
-BNE R6, R0, 5       
+bloco_alerta:
+    # 4. Bloco de Alerta (Distância crítica e Velocidade normal)
+    li   x1, 1    # Valor 1: Freio Normal
+    li   x2, 1    # Valor 2: Status Alerta
+    j    fim_rotina
 
-# --- BLOCO DE ALERTA ---
-# Executado se: Distância for Crítica E Velocidade for OK
-ADDI R1, R0, 1      # Prepara valor 1
-SW  R1, 20(R0)      # Mem[0x20] = 1 (Freio Normal)
-SW  R1, 21(R0)      # Mem[0x21] = 1 (Status: Alerta)
-JAL R7, 8           # Finaliza a execução
+bloco_emergencia:
+    # 5. Bloco de Emergência
+    li   x1, 2    # Valor 1: Freio de Emergência
+    li   x2, 2    # Valor 2: Status de Emergência
+    j    fim_rotina
 
-# --- BLOCO DE EMERGÊNCIA (PULADO) ---
-ADDI R1, R0, 2      
-SW  R1, 20(R0)      # Mem[0x20] = 2
-SW  R1, 21(R0)      # Mem[0x21] = 2
-JAL R7, 8           
+bloco_normal:
+    # 6. Bloco Normal
+    li   x1, 0    # Valor 1: Freio Solto
+    li   x2, 0    # Valor 2: Status Tudo OK
 
-# --- BLOCO NORMAL (PULADO) ---
-SW  R0, 20(R0)      # Mem[0x20] = 0
-SW  R0, 21(R0)      # Mem[0x21] = 0
+fim_rotina:
+    # 7. Encerra o programa
+    li   a7, 10
+    ecall
