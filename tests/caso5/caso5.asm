@@ -1,26 +1,32 @@
-# --- CARGA DE DADOS ---
-ADD R0, R0, R0      # NOP
-LW  R1, 10(R0)      # R1 = 30 (Distância Atual - SEGURO)
-LW  R2, 11(R0)      # R2 = 80 (Velocidade Atual - ALTA)
-LW  R3, 12(R0)      # R3 = 3  (Distância Segura)
-LW  R4, 13(R0)      # R4 = 50 (Velocidade Máxima)
+.text
+.globl main
+main:
+    # 1. CARGA DE DADOS (Simulando os valores nos registradores)
+    li   x1, 30   # Distância Atual (Seguro)
+    li   x2, 80   # Velocidade Atual (Alta)
+    li   x3, 3    # Distância Segura
+    li   x4, 50   # Velocidade Máxima
 
-# --- TESTE DE CONDIÇÃO PRIORITÁRIA ---
-# R5 = (Distância Atual < Distância Segura) ? 1 : 0
-SLT R5, R1, R3      # 30 < 3? NÃO, então R5 = 0 (FALSO)
+    # 2. TESTE DE CONDIÇÃO PRIORITÁRIA
+    # x5 = (Distância Atual < Distância Segura) ? 1 : 0
+    slt  x5, x1, x3   # Como 30 não é menor que 3, x5 = 0 (Falso)
 
-# --- TOMADA DE DECISÃO ---
-# Como a distância é segura (R5 == 0), o BEQ pula direto para o estado normal,
-# ignorando completamente qualquer checagem de velocidade.
-BEQ R5, R0, 5       
+    # 3. TOMADA DE DECISÃO
+    # Se x5 for igual a 0, pula diretamente para o bloco normal
+    beqz x5, bloco_normal
 
-# --- BLOCO DE ACIONAMENTO (PULADO) ---
-ADDI R1, R0, 2      
-SW  R1, 20(R0)      
-SW  R1, 21(R0)      
-JAL R7, 8           
+bloco_emergencia:
+    # 4. Bloco de Emergência (Pulsado se a distância for crítica)
+    li   x1, 2    # Valor 1: Freio de Emergência
+    li   x2, 2    # Valor 2: Status de Emergência
+    j    fim_rotina
 
-# --- BLOCO DE OPERAÇÃO NORMAL (SAÍDA ESPERADA) ---
-# Alvo do pulo: Mantém o veículo em operação normal
-SW  R0, 20(R0)      # Mem[0x20] = 0 (Freio DESATIVADO)
-SW  R0, 21(R0)      # Mem[0x21] = 0 (Status: NORMAL)
+bloco_normal:
+    # 5. Bloco de Operação Normal (Alvo do pulo)
+    li   x1, 0    # Valor 1: Freio Desativado
+    li   x2, 0    # Valor 2: Status: Normal
+
+fim_rotina:
+    # 6. Encerra o programa
+    li   a7, 10
+    ecall
