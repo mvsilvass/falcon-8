@@ -1,28 +1,33 @@
-# --- INICIALIZAÇÃO (CARGA DE DADOS) ---
-ADD R0, R0, R0      # NOP
-LW  R1, 10(R0)      # R1 = 20 (Distância atual do obstáculo frontal)
-LW  R2, 11(R0)      # R2 = 60 (Velocidade atual do veículo)
-LW  R3, 14(R0)      # R3 = 40 (Velocidade do veículo à frente)
-LW  R4, 15(R0)      # R4 = 8  (Distância do veículo à frente)
-ADDI R5, R0, 10     # R5 = 10 (Limite para redução)
-ADDI R6, R0, 20     # R6 = 20 (Valor de comparação)
+.text
+.globl main
+main:
+    # 1. CARGA DE DADOS (Simulando os valores nos registradores)
+    li   x1, 20   # Distância atual do obstáculo frontal (R1)
+    li   x2, 60   # Velocidade atual do veículo (R2)
+    li   x3, 40   # Velocidade do veículo à frente (R3)
+    li   x4, 8    # Distância do veículo à frente (R4)
+    
+    li   x5, 10   # Limite para redução (R5)
+    li   x6, 20   # Valor de comparação (R6)
 
-# --- PROCESSAMENTO LÓGICO ---
-# 1. Verificar se a distância do veículo à frente é menor que 10 metros
-BLT R4, R5, 3       # Se R4 < R5, pula 3 instruções (se 8 < 10, executa o desvio)
+    # 2. PROCESSAMENTO LÓGICO
+    # Verifica se a distância do veículo à frente (x4) é menor que 10 metros (x5)
+    # Como 8 < 10, o salto ocorre para a redução
+    blt  x4, x5, executa_reducao
 
-# --- SE FALSO (NÃO ENTRA NA CONDIÇÃO) ---
-ADD R0, R0, R0      # NOP
-ADD R0, R0, R0      # NOP
+bloco_sem_reducao:
+    # Caso a condição seja falsa (não entra no desvio)
+    j fim_rotina
 
-# --- SE VERDADEIRO (ENTRA NA CONDIÇÃO) ---
-ADDI R1, R0, 1      # R1 = 1 (Configura o valor 1 para o registrador de deslocamento)
-SRL R7, R2, R1      # R7 = 60 >> 1 = 30 km/h (Velocidade-alvo)
-SW  R7, 23(R0)      # Mem[0x23] = 30 (Velocidade-alvo atualizada na memória)
+executa_reducao:
+    # 3. SE VERDADEIRO (Entra na condição de redução)
+    li   t1, 1        # Registrador temporário para o deslocamento (valor 1)
+    srl  x1, x2, t1   # x1 = 60 >> 1 = 30 km/h (Velocidade-alvo)
+    
+    # Ajuste do comando do acelerador (aproximação proporcional)
+    sll  x2, x1, t1   # x2 = 30 << 1 = 60 km/h (Comando do acelerador)
 
-# Ajuste do comando do acelerador (aproximação proporcional)
-SLL R2, R7, R1      # R2 = 30 * 2 = 60 km/h (Comando ajustado)
-SW  R2, 22(R0)      # Mem[0x22] = 60 (Comando do acelerador na memória)
-
-# Fim da Rotina
-JAL R7, 8           # Pula para o fim do programa
+fim_rotina:
+    # 4. Encerra o programa
+    li   a7, 10
+    ecall
