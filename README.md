@@ -107,8 +107,6 @@ Interface de leitura e escrita para armazenamento persistente de dados e sensore
 
 ![Data Memory](images/data_memory.png)
 
----
-
 ## Sistema de Frenagem Inteligente (SFI)
 
 O SFI monitora os sensores e decide o nível de frenagem necessário.
@@ -125,7 +123,7 @@ O SFI monitora os sensores e decide o nível de frenagem necessário.
 
 ---
 
-## Validação e Casos de Teste
+### Validação e Casos de Teste do SFI
 
 Para garantir a confiabilidade do sistema de frenagem, o processador foi submetido aos 5 casos de teste obrigatórios. Para cada cenário, foi desenvolvido um código Assembly específico e um arquivo de imagem de memória correspondente.
 
@@ -136,6 +134,34 @@ Para garantir a confiabilidade do sistema de frenagem, o processador foi submeti
 | **3** | Alerta | 2m / 20km/h | **1 (Normal)**
 | **4** | Limite Exato | 3m / 40km/h | **1 (Normal)**
 | **5** | Alta Velocidade | 30m / 80km/h | **0 (Desligado)** 
+
+
+##  SISTEMA DE VELOCIDADE ADAPTATIVA (CVA)
+
+O CVA ajusta automaticamente a aceleração do veículo com base na distância e velocidade do carro à frente, buscando manter a fluidez e a segurança.
+
+### Mapeamento de Memória (Entradas e Saídas)
+| Endereço | Descrição | Atuador/Sensor | Valor Exemplo |
+| :--- | :--- | :--- | :--- |
+| **0x14** | Velocidade do veículo à frente | Radar (Entrada) | 40 km/h |
+| **0x15**  | Distância do veículo à frente | Radar (Entrada) | 8 metros |
+| **0x22** | **Comando PWM para acelerador** | Atuador (Saída)| 0-255 |
+| **0x23** | **Velocidade-alvo calculada** | Dashboard (Saída) | 30 km/h|
+
+---
+
+### Validação e Casos de Teste (CVA)
+
+Para garantir a confiabilidade do sistema de velocidade adaptativa, o processador foi submetido aos 4 casos de teste obrigatórios de controle de aceleração. Para cada cenário, foi desenvolvido um código Assembly específico e um arquivo de imagem de memória correspondente.
+
+| Caso | Cenário | Entrada (Dist/Vel) | Processamento Esperado | Saída Esperada (Vel_Alvo / PWM) |
+| :--- | :--- | :--- | :--- | :--- |
+| **6** | Redução  | 8m / 60km/h | dist < 10m → vel >> 1 (÷2) | **30 km/h / 60** |
+| **7** | Aumento | 25m / 50km/h | dist > 20m → vel << 1 (×2)| **100 km/h / 200** |
+| **8** | Manter velocidade | 15m / 60km/h | 10m < d < 20m → v_frente | **55 km/h / 110** |
+| **9** | Limite Máximo | 100m / 80km/h | dist > 20m  → limite 120 | **120 km/h / 255** |
+
+---
 
 ## Ferramentas Utilizadas
 * **Logisim Evolution:** Utilizado para a modelagem e design digital do hardware.
