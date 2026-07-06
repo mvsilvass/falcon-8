@@ -38,7 +38,7 @@ O Falcon-8 trabalha com instruções de 16 bits divididas nos seguintes tipos:
 | **R-TYPE** | SLL | 0000 | 101 | - |
 | **R-TYPE** | SRL | 0000 | 110 | - |
 | **I-TYPE** | ADDI | 0001 | 000 | 00 |
-| **I-TYPE** | LOAD (LW) | 0010 | 000 | 00 |
+| **I-TYPE** | LW | 0010 | 000 | 00 |
 | **I-TYPE** | SLLI | 0111 | 101 | 00 |
 | **S-TYPE** | SW | 0011 | 000 | 01 |
 | **B-TYPE** | BEQ | 0100 | 001 | 10 |
